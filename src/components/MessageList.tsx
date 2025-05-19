@@ -7,7 +7,6 @@ type MessageListProps = {
 export const MessageList = (props: MessageListProps) => {
 
     const { messages } = props;    
-    console.log(messages);
     
     return (
         <div>
