@@ -67,26 +67,27 @@ function App() {
     event.preventDefault();
 
     const userMessage = new ChatMessage(Date.now().toString(), 'user', actualUserMessageContent)
-    setMessages((prev) => [...prev, userMessage])
+    if (userMessage != undefined) setMessages((prev) => [...prev, userMessage])
     
     let response: ChatMessage;
-
+    
     if (actualModel) {
       getResponse(actualUserMessageContent).then((responseContent) => {
-
+        
         if (responseContent) {
           response = new ChatMessage(Date.now().toString(), actualModel.name, responseContent);
         } else {
-          response = new ChatMessage(Date.now().toString(), 'error', 'no model selected')
+          response = new ChatMessage(Date.now().toString(), 'error', 'no message received')
         }
-
+        setMessages((prev) => [...prev, response])
       })
     } else {
       response = new ChatMessage(Date.now().toString(), 'error', 'no model selected')
+      setMessages((prev) => [...prev, response])
     }
     
-    setMessages((prev) => [...prev, response])
-  }
+    
+    }
   
   useEffect(() => {
     if (!isModelListLoaded) {
